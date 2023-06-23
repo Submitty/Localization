@@ -1,0 +1,12 @@
+name: Bump Submitty
+
+on:
+  repository_dispatch:
+    types: [version-up]
+  workflow_dispatch:
+
+jobs:
+  stub:
+    runs-on: ubuntu-20.04
+    steps:
+      - run: echo "Test"
