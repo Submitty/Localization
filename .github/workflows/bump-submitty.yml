@@ -43,6 +43,7 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.PAT }}
+          path: Localization
           commit-message: update version and base lang to ${{ github.event.client_payload.ref_name }}
           branch: bump-submitty/${{ github.event.client_payload.ref_name }}
           title: "[Dependency] Update Submitty from ${{ steps.version.outputs.prop }} to ${{ github.event.client_payload.ref_name }}"
