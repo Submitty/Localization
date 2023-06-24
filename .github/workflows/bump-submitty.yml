@@ -47,4 +47,4 @@ jobs:
           commit-message: update version and base lang to ${{ github.event.client_payload.ref_name }}
           branch: bump-submitty/${{ github.event.client_payload.ref_name }}
           title: "[Dependency] Update Submitty from ${{ steps.version.outputs.prop }} to ${{ github.event.client_payload.ref_name }}"
-          body: "Bumps [Submitty](https://github.com/${{ github.repository_owner }}/Submitty) to version ${{ steps.version.outputs.prop }} to ${{ github.event.client_payload.ref_name }}."
+          body: "Bumps [Submitty](https://github.com/${{ github.repository_owner }}/Submitty) from version ${{ steps.version.outputs.prop }} to ${{ github.event.client_payload.ref_name }}."
