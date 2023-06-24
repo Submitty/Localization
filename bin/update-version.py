@@ -12,7 +12,7 @@ def main():
 
     repo_path = Path(__file__).parent.parent
     if not repo_path.is_dir():
-        raise NotADirectoryError("Could not locate repository.")
+        raise NotADirectoryError('Could not locate repository.')
 
     # Update version in JSON file
     with (repo_path / 'version.json').open() as file:
