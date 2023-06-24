@@ -24,10 +24,28 @@ jobs:
         uses: actions/checkout@v3
         with:
           path: Localization
+      
+      - name: Load config data
+        id: config
+        run: |
+          echo 'CONFIG<<EOF' >> $GITHUB_ENV
+          cat Localization/config.json >> $GITHUB_ENV
+          echo 'EOF' >> $GITHUB_ENV
+
+          echo 'version=${{ fromJson(env.CONFIG).submitty_version }}' >> $GITHUB_OUTPUT
 
       - uses: actions/setup-python@v4
         with:
           python-version: 3.11
 
-      - name: Update Version
+      - name: Run Version Update
         run: python3 Localization/bin/update-version.py -v ${{ github.event.client_payload.ref_name }}
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.PAT }}
+          commit-message: update version and base lang to ${{ github.event.client_payload.ref_name }}
+          branch: bump-submitty/${{ github.event.client_payload.ref_name }}
+          title: "[Dependency] Update Submitty from ${{ steps.config.outputs.submitty_version }} to ${{ github.event.client_payload.ref_name }}"
+          body: "Bumps [Submitty](https://github.com/${{ github.repository_owner }}/Submitty) to version ${{ steps.config.outputs.submitty_version }} to ${{ github.event.client_payload.ref_name }}."
