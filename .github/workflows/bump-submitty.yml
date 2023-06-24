@@ -30,4 +30,4 @@ jobs:
           python-version: 3.11
 
       - name: Update Version
-        run: python3 Localization/bin/update-version.py -v ${{ github.event.client_payload.ref }}
+        run: python3 Localization/bin/update-version.py -v ${{ github.event.client_payload.ref_name }}
