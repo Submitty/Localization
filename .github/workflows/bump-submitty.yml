@@ -49,4 +49,3 @@ jobs:
           title: "[Dependency] Update Submitty from ${{ steps.version.outputs.prop }} to ${{ github.event.client_payload.ref_name }}"
           body: "Bumps [Submitty](https://github.com/${{ github.repository_owner }}/Submitty) from ${{ steps.version.outputs.prop }} to ${{ github.event.client_payload.ref_name }}."
           committer: GitHub <noreply@github.com>
-          author: GitHub <noreply@github.com>
