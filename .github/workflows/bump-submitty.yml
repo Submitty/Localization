@@ -32,6 +32,7 @@ jobs:
           cat Localization/config.json >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
 
+          echo "Config ${{ env.CONFIG }}"
           echo 'version=${{ fromJson(env.CONFIG).submitty_version }}' >> $GITHUB_OUTPUT
 
       - uses: actions/setup-python@v4
