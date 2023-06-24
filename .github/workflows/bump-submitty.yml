@@ -6,7 +6,28 @@ on:
   workflow_dispatch:
 
 jobs:
-  stub:
+  update-submitty:
     runs-on: ubuntu-20.04
+    name: Update Submitty
     steps:
-      - run: echo "Test"
+      - name: Checkout Submitty Repository
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ github.repository_owner }}/Submitty
+          sparse-checkout: |
+            site/app/templates
+          sparse-checkout-cone-mode: false
+          ref: ${{ github.event.client_payload.ref }}
+          path: Submitty
+
+      - name: Checkout Localization Repository
+        uses: actions/checkout@v3
+        with:
+          path: Localization
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: Update Version
+        run: python3 Localization/bin/update-version.py
