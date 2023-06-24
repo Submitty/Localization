@@ -25,14 +25,12 @@ jobs:
         with:
           path: Localization
       
-      - name: Load config data
-        id: config
-        run: |
-          echo 'CONFIG<<EOF' >> $GITHUB_ENV
-          cat Localization/config.json >> $GITHUB_ENV
-          echo 'EOF' >> $GITHUB_ENV
-
-          echo "Config ${{ env.CONFIG }}"
+      - name: Get version
+        id: version
+        uses: notiz-dev/github-action-json-property@v0.2.0
+        with:
+          path: Localization/config.json
+          prop_path: submitty_version
 
       - uses: actions/setup-python@v4
         with:
@@ -47,5 +45,5 @@ jobs:
           token: ${{ secrets.PAT }}
           commit-message: update version and base lang to ${{ github.event.client_payload.ref_name }}
           branch: bump-submitty/${{ github.event.client_payload.ref_name }}
-          title: "[Dependency] Update Submitty from ${{ steps.config.outputs.submitty_version }} to ${{ github.event.client_payload.ref_name }}"
-          body: "Bumps [Submitty](https://github.com/${{ github.repository_owner }}/Submitty) to version ${{ steps.config.outputs.submitty_version }} to ${{ github.event.client_payload.ref_name }}."
+          title: "[Dependency] Update Submitty from ${{ steps.version.outputs.prop }} to ${{ github.event.client_payload.ref_name }}"
+          body: "Bumps [Submitty](https://github.com/${{ github.repository_owner }}/Submitty) to version ${{ steps.version.outputs.prop }} to ${{ github.event.client_payload.ref_name }}."
