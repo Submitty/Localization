@@ -12,14 +12,15 @@ def get_args() -> Namespace:
 
 
 def get_template_data() -> dict:
-    pattern = re.compile(r"localize\s*?\(\s*?(?P<q1>[\'\"])(?P<key>[\w\.]+?)\s*?(?P=q1),\s*?(?P<q2>[\'\"])(?P<val>.+?)(?<!\\\\)(?P=q2)\s*?.*?\)")
+    pattern = re.compile(r"localize\s*?\(\s*?(?P<q1>[\'\"])(?P<key>[\w\.]+?)\s*?(?P=q1)"
+                         r",\s*?(?P<q2>[\'\"])(?P<val>.+?)(?<!\\\\)(?P=q2)\s*?.*?\)")
 
     template_path = Path(__file__).parent.parent.parent / 'Submitty' / 'site' / 'app' / 'templates'
     if not template_path.is_dir():
         raise NotADirectoryError('Could not locate template directory.')
 
     data = dict()
-    
+
     # Loop through template files
     for child in template_path.iterdir():
         if not child.is_file() or child.suffix != '.twig':
@@ -37,7 +38,7 @@ def get_template_data() -> dict:
 
                 last_key = tree.pop()
 
-                loc = data # Current location in tree (should always be dict)
+                loc = data  # Current location in tree (should always be dict)
                 for key in tree:
                     if key in loc:
                         loc = loc[key]
@@ -46,11 +47,11 @@ def get_template_data() -> dict:
                     else:
                         loc[key] = dict()
                         loc = loc[key]
-                
+
                 if not isinstance(loc, dict):
                     raise KeyError('Duplicate template key found: ' + key)
                 loc[last_key] = val
-        
+
     return data
 
 
