@@ -1,0 +1,50 @@
+name: Bump Submitty
+
+on:
+  repository_dispatch:
+    types: [version-up]
+  workflow_dispatch:
+
+jobs:
+  update-submitty:
+    runs-on: ubuntu-latest
+    name: Update Submitty
+    steps:
+      - name: Checkout Submitty Repository
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ github.repository_owner }}/Submitty
+          sparse-checkout: |
+            site/app/templates
+          sparse-checkout-cone-mode: false
+          ref: ${{ github.event.client_payload.ref }}
+          path: Submitty
+
+      - name: Checkout Localization Repository
+        uses: actions/checkout@v3
+        with:
+          path: Localization
+
+      - name: Get version
+        id: version
+        uses: notiz-dev/github-action-json-property@v0.2.0
+        with:
+          path: Localization/config.json
+          prop_path: submitty_version
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: Run Version Update
+        run: python3 Localization/bin/update-version.py -v ${{ github.event.client_payload.ref_name }}
+
+      - name: Create Pull Request
+        uses: Submitty/peter-evans-create-pull-request@v23.07.00
+        with:
+          token: ${{ secrets.SUBMITTYBOT_DEPENDENCY_TOKEN }}
+          path: Localization
+          commit-message: update version and base lang to ${{ github.event.client_payload.ref_name }}
+          branch: bump-submitty/${{ github.event.client_payload.ref_name }}
+          title: "[Dependency] Update Submitty from ${{ steps.version.outputs.prop }} to ${{ github.event.client_payload.ref_name }}"
+          body: "Bumps [Submitty](https://github.com/${{ github.repository_owner }}/Submitty) from version [${{ steps.version.outputs.prop }}](https://github.com/${{ github.repository_owner }}/Submitty/releases/tag/${{ steps.version.outputs.prop }}) to [${{ github.event.client_payload.ref_name }}](https://github.com/${{ github.repository_owner }}/Submitty/releases/tag/${{ github.event.client_payload.ref_name }})."
