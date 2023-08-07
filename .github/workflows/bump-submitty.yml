@@ -42,7 +42,7 @@ jobs:
       - name: Create Pull Request
         uses: Submitty/peter-evans-create-pull-request@v23.07.00
         with:
-          token: ${{ secrets.PAT }}
+          token: ${{ secrets.SUBMITTYBOT_DEPENDENCY_TOKEN }}
           path: Localization
           commit-message: update version and base lang to ${{ github.event.client_payload.ref_name }}
           branch: bump-submitty/${{ github.event.client_payload.ref_name }}
