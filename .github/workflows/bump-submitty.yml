@@ -40,7 +40,7 @@ jobs:
         run: python3 Localization/bin/update-version.py -v ${{ github.event.client_payload.ref_name }}
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v5
+        uses: Submitty/peter-evans-create-pull-request@v23.07.00
         with:
           token: ${{ secrets.PAT }}
           path: Localization
