@@ -1,1 +1,16 @@
-{}
+{
+  "My_Profile": {
+    "My_Profile": "My Profile",
+    "Basic_Information": "Basic Information",
+    "Username": "Username",
+    "First_Name": "First Name",
+    "Last_Name": "Last Name",
+    "Abbreviated_Name": "Abbreviated Name",
+    "Pronouns": "Pronouns",
+    "Pronouns_Forum": "Display Pronouns in Discussion Forum",
+    "Primary_Email": "Primary Email",
+    "Secondary_Email": "Secondary Email",
+    "Send_Email": "Send Email to Secondary Address",
+    "Access_Level": "Access Level"
+  }
+}
