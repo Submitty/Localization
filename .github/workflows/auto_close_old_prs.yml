@@ -4,8 +4,8 @@ on:
   pull_request:
     types: [opened]
 jobs:
-  hello-world:
-    name: Hello world
+  auto close pr:
+    name: auto close pr
     runs-on: ubuntu-latest
     permissions:
       contents: read
