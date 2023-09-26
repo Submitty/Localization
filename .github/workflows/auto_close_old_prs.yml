@@ -11,11 +11,11 @@ jobs:
       contents: read
       pull-requests: write
     steps:
-    - name: Check-out main repository
-      uses: actions/checkout@v2
-      
-    - name: Hello World
-      run: python .github/workflows/auto_close_prs.py
-      env:
+      - name: Check-out main repository
+        uses: actions/checkout@v2
+      - name: Hello World
+        run: python .github/workflows/auto_close_prs.py
+        env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      shell: sh
+        shell: sh
+        

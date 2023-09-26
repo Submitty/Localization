@@ -11,3 +11,4 @@ if len(output) > 0:
 
 for id in output:
     subprocess.run(['gh', 'pr', 'close', str(id["number"])])
+    
